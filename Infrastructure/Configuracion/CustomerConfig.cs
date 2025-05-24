@@ -12,16 +12,19 @@ namespace SNET.WEBSINAI.Data.SqlServer.Configuracion
 
             builder.Property(e => e.FullName)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(100)
+                .HasColumnType("varchar(100)");
 
             builder
                 .Property(e => e.Email)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(100)
+                .HasColumnType("varchar(100)");
 
             builder
                 .Property(e => e.PhoneNumber)
-                .IsRequired();
+                .HasMaxLength(20)
+                .HasColumnType("varchar(20)");
         }
     }
 }

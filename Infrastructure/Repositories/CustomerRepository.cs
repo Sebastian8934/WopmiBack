@@ -23,12 +23,12 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<Customer>> GetAllAsync()
         {
-           return await _context.Customer.Include(a => a.CreditCards).ToListAsync();           
+           return await _context.Customer.Include(a => a.CreditCard).ToListAsync();
         }
 
-        public async Task AddAsync(Customer product)
+        public async Task AddAsync(Customer customer)
         {
-            _context.Customer.Add(product);
+            _context.Customer.Add(customer);
             await _context.SaveChangesAsync();
         }
     }

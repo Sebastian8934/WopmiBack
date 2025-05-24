@@ -8,26 +8,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace Infrastructure.Repositories 
 {
-    public class ProductRepository : IProductRepository
+    public class DeliveryInfoRepository : IDeliveryInfoRepository
     {
         private readonly AppDbContext _context;
 
-        public ProductRepository(AppDbContext context)
+        public DeliveryInfoRepository(AppDbContext context)
         {
             _context = context;
         }
 
-        public async Task<IEnumerable<Product>> GetAllAsync()
-        {
-            return await _context.Product.ToListAsync();             
+        public async Task<IEnumerable<DeliveryInfo>> GetAllAsync()
+        {            
+            return await _context.DeliveryInfo.ToListAsync();
         }
 
-        public async Task AddAsync(Product product)
+        public async Task AddAsync(DeliveryInfo info)
         {
-            _context.Product.Add(product);
+            _context.DeliveryInfo.Add(info);
             await _context.SaveChangesAsync();
         }
     }

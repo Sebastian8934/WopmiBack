@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Application.Services;
 using Domain.Entities;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Controllers
 {
@@ -10,17 +12,51 @@ namespace WebApi.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly CustomerService _service;
+        private readonly AppDbContext _context;
 
-        public CustomerController(CustomerService service)
+        public CustomerController(CustomerService service, AppDbContext context)
         {
             _service = service;
+            _context = context;
         }
+
+        //[HttpGet]
+        //public async Task<IActionResult> GetAll()
+        //{
+        //    var products = await _service.GetAllCustomerAsync();
+        //    return Ok(products);
+        //}
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var products = await _service.GetAllCustomerAsync();
-            return Ok(products);
+            var customers = await _context.Customer
+            .Include(c => c.CreditCard)
+            .Include(c => c.DeliveryInfo)
+            .Select(c => new
+            {
+                c.Id,
+                c.FullName,
+                c.Email,
+                c.PhoneNumber,
+                CreditCards = c.CreditCard.Select(cc => new
+                {
+                    cc.Id,
+                    cc.CardholderName,
+                    cc.ExpirationDate
+                }),
+                DeliveryInfos = c.DeliveryInfo.Select(di => new
+                {
+                    di.Id,
+                    di.Address,
+                    di.City,
+                    di.State,
+                    di.ZipCode,
+                    di.Country
+                })
+            }).ToListAsync();
+
+            return Ok(customers);
         }
 
         [HttpPost]

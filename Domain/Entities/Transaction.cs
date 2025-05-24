@@ -11,7 +11,6 @@ namespace Domain.Entities
     public class Transaction
     {
         public int Id { get; set; }
-        //[JsonPropertyName("Transaction_number")]
         public string? TransactionNumber { get; set; }
         public string? Status { get; set; }
         public decimal TotalAmount { get; set; }
@@ -20,7 +19,7 @@ namespace Domain.Entities
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public int CustomerId { get; set; }
-
-        public ICollection<TransactionItem> TransactionItem { get; set; } = new List<TransactionItem>();
+        public Customer Customer { get; set; }
+        public ICollection<TransactionItem> TransactionItem { get; set; }
     }
 }

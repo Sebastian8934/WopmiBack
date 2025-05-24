@@ -13,14 +13,17 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 // 🧩 Inyecta dependencias
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<CustomerService>();
 
 builder.Services.AddScoped<ICreditCardRepository, CreditCardRepository>();
 builder.Services.AddScoped<CreditCardsService>();
 
-builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-builder.Services.AddScoped<CustomerService>();
+builder.Services.AddScoped<IDeliveryInfoRepository, DeliveryInfoRepository>();
+builder.Services.AddScoped<DeliveryInfoService>();
+
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ProductService>();
 
 // 🚀 Configura servicios API
 builder.Services.AddControllers();

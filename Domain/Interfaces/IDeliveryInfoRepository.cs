@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Ports
 {
-    public interface IProductRepository
+    public interface IDeliveryInfoRepository
     {
-        Task<IEnumerable<Product>> GetAllAsync();
-        Task AddAsync(Product product);
+        Task<IEnumerable<DeliveryInfo>> GetAllAsync();
+        Task AddAsync(DeliveryInfo deliveryInfo);
     }
 }
