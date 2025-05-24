@@ -33,6 +33,7 @@ namespace WebApi.Controllers
             var customers = await _context.Customer
             .Include(c => c.CreditCard)
             .Include(c => c.DeliveryInfo)
+            .Include(c => c.Transaction)
             .Select(c => new
             {
                 c.Id,
@@ -53,7 +54,16 @@ namespace WebApi.Controllers
                     di.State,
                     di.ZipCode,
                     di.Country
-                })
+                }),
+                Transactions = c.Transaction.Select(ei => new
+                {
+                    ei.Id,
+                    ei.TransactionNumber,
+                    ei.Status,
+                    ei.TotalAmount,
+                    ei.BaseFee,
+                    ei.DeliveryFee,
+                }),
             }).ToListAsync();
 
             return Ok(customers);

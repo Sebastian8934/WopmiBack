@@ -14,6 +14,6 @@ namespace Domain.Entities
         public string? PhoneNumber { get; set; }
         public virtual ICollection<CreditCard> CreditCard { get; set; }
         public virtual ICollection<DeliveryInfo> DeliveryInfo { get; set; }
-        public ICollection<Customer> Transaction { get; set; }
+        public ICollection<Transaction> Transaction { get; set; }
     }
 }

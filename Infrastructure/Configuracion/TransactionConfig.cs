@@ -8,6 +8,8 @@ namespace SNET.WEBSINAI.Data.SqlServer.Configuracion
     {
         public void Configure(EntityTypeBuilder<Transaction> builder)
         {
+            builder.ToTable("[Transaction]");
+
             builder.HasKey(e => e.Id);
 
             builder.Property(e => e.TransactionNumber)
