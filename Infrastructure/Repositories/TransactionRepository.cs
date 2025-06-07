@@ -7,28 +7,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 
 namespace Infrastructure.Repositories 
 {
-    public class CustomerRepository : ICustomerRepository
+    public class TransactionRepository : ITransactionRepository
     {
         private readonly AppDbContext _context;
 
-        public CustomerRepository(AppDbContext context)
+        public TransactionRepository(AppDbContext context)
         {
             _context = context;
         }
 
-        public async Task<IEnumerable<Customer>> GetAllAsync()
+        public async Task<IEnumerable<Transaction>> GetAllAsync()
         {
-           return await _context.Customer.Include(a => a.CreditCard).ToListAsync();
+            return await _context.Transaction.ToListAsync();             
         }
 
-        public async Task AddAsync(Customer customer)
+        public async Task AddAsync(Transaction transaction)
         {
-            _context.Customer.Add(customer);
+            _context.Transaction.Add(transaction);
             await _context.SaveChangesAsync();
         }
     }

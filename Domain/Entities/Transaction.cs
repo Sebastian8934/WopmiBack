@@ -18,8 +18,6 @@ namespace Domain.Entities
         public decimal DeliveryFee { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
-        public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
         public ICollection<TransactionItem> TransactionItem { get; set; }
     }
 }

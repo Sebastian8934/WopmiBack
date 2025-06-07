@@ -10,6 +10,6 @@ namespace Domain.Ports
     public interface ICreditCardRepository
     {
         Task<IEnumerable<CreditCard>> GetAllAsync();
-        Task AddAsync(CreditCard product);
+        Task AddAsync(CreditCard creditCard);
     }
 }

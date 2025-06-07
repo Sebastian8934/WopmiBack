@@ -48,10 +48,6 @@ namespace SNET.WEBSINAI.Data.SqlServer.Configuracion
                 .HasMaxLength(10)
                 .HasColumnType("decimal");
 
-            builder
-                .Property(e => e.CustomerId)
-                .IsRequired();
-
         }
     }
 }
