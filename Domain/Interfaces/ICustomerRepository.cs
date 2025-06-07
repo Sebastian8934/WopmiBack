@@ -10,6 +10,6 @@ namespace Domain.Ports
     public interface ICustomerRepository
     {
         Task<IEnumerable<Customer>> GetAllAsync();
-        Task AddAsync(Customer product);
+        Task AddAsync(Customer customer);
     }
 }

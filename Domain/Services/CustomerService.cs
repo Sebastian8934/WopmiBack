@@ -20,6 +20,6 @@ namespace Application.Services
 
         public async Task<IEnumerable<Customer>> GetAllCustomerAsync() => await _repository.GetAllAsync();
 
-        public async Task AddCustomertAsync(Customer product) => await _repository.AddAsync(product);
+        public async Task AddCustomertAsync(Customer customer) => await _repository.AddAsync(customer);
     }
 }

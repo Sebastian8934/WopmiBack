@@ -12,26 +12,24 @@ namespace WebApi.Controllers
     [ApiController]
     public class TransactionController : ControllerBase
     {
-        private readonly CustomerService _service;
-        private readonly AppDbContext _context;
+        private readonly TransactionService _service;
 
-        public TransactionController(AppDbContext context)
+        public TransactionController(TransactionService service)
         {
-            _context = context;
+            _service = service;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var transaction = await _context.Transaction.ToListAsync();
+            var transaction = await _service.GetAllTransactionAsync();
             return Ok(transaction);
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(Transaction transaction)
         {
-            await _context.Transaction.AddAsync(transaction);
-            await _context.SaveChangesAsync();
+            await _service.AddTransactionAsync(transaction);
             return Ok();
         }
     }

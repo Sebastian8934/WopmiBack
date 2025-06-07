@@ -19,6 +19,6 @@ namespace Application.Services
 
         public async Task<IEnumerable<DeliveryInfo>> GetAllDeliveryInfodAsync() => await _repository.GetAllAsync();
 
-        public async Task AddDeliveryInfoAsync(DeliveryInfo product) => await _repository.AddAsync(product);
+        public async Task AddDeliveryInfoAsync(DeliveryInfo deliveryInfo) => await _repository.AddAsync(deliveryInfo);
     }
 }
