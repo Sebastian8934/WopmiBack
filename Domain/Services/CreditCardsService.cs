@@ -20,6 +20,6 @@ namespace Application.Services
 
         public async Task<IEnumerable<CreditCard>> GetAllCreditCardAsync() => await _repository.GetAllAsync();
 
-        public async Task AddCreditCardAsync(CreditCard product) => await _repository.AddAsync(product);
+        public async Task AddCreditCardAsync(CreditCard creditCard) => await _repository.AddAsync(creditCard);
     }
 }

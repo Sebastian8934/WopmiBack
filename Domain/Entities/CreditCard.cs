@@ -14,7 +14,5 @@ namespace Domain.Entities
         public string? CardholderName { get; set; }
         public string? ExpirationDate { get; set; }
         public string? Cvv { get; set; }
-        public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
     }
 }

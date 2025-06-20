@@ -3,6 +3,17 @@ using Application.Services;
 using Domain.Ports;
 using Infrastructure.Data;
 using Infrastructure.Repositories;
+using Microsoft.AspNetCore.Identity;
+using Domain.Interfaces;
+using Infrastructure.Auth;
+using Infrastructure.Jwt;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Application.Interface;
+using Application.UseCases.Roles;
+using Infrastructure.Identity;
+using Application.UseCases.Users;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +24,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 // 🧩 Inyecta dependencias
-builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-builder.Services.AddScoped<CustomerService>();
-
 builder.Services.AddScoped<ICreditCardRepository, CreditCardRepository>();
 builder.Services.AddScoped<CreditCardsService>();
 
@@ -24,6 +32,58 @@ builder.Services.AddScoped<DeliveryInfoService>();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ProductService>();
+
+builder.Services.AddScoped<IRoleService, RoleService>();
+builder.Services.AddScoped<IRoleRepository, RoleRepositoryAdapter>();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+//Auth
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+//Auth
+builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequiredLength = 6;
+})
+.AddEntityFrameworkStores<AppDbContext>()
+.AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/login";
+    options.LogoutPath = "/logout";
+    options.ExpireTimeSpan = TimeSpan.FromHours(1);
+});
+
+// JWT config
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
+builder.Services.AddScoped<IAuthService, AuthService>(); // desde Infrastructure
+
+// JWT config
+var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    var key = Encoding.UTF8.GetBytes(jwtSettings.Key);
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+
+        ValidIssuer = jwtSettings.Issuer,
+        ValidAudience = jwtSettings.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(key)
+    };
+});
 
 // 🚀 Configura servicios API
 builder.Services.AddControllers();
@@ -36,6 +96,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 

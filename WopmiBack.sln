@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "Application\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{A6607584-5992-48E2-9E73-9CFFB9AE8D62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTesting.Test", "UnitTesting.Test\UnitTesting.Test.csproj", "{0C18A1AC-8471-4079-8D6B-87E4C07D6585}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTesting.Test", "UnitTesting.Test\UnitTesting.Test.csproj", "{0C18A1AC-8471-4079-8D6B-87E4C07D6585}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

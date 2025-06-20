@@ -33,10 +33,6 @@ namespace SNET.WEBSINAI.Data.SqlServer.Configuracion
                 .HasMaxLength(4)
                 .HasColumnType("varchar(4)");
 
-            builder
-                .Property(e => e.CustomerId)
-                .IsRequired();
-
         }
     }
 }
