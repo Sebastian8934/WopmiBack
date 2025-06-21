@@ -1,4 +1,4 @@
-# Store Inventory and Transaction Management App
+# Aplicación de gestión de inventario y transacciones para una tienda digital
 
 Este proyecto es una aplicación completa que incluye una API RESTful desarrollada en ASP.NET Core y una interfaz de usuario (UI) para gestionar productos, inventario, clientes, transacciones y entregas. 
 El sistema sigue un flujo de compra de 5 pasos que permite mostrar productos, ingresar información de pago, confirmar la compra y mostrar el estado final de la transacción.
