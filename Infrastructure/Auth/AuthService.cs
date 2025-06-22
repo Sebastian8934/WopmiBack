@@ -37,7 +37,7 @@ namespace Infrastructure.Auth
 
             var token = await GenerateToken(user.Id);
 
-            return new AuthResult { Succeeded = true, Token = token };
+            return new AuthResult { Succeeded = true, Token = token.token };
         }
 
         public async Task<AuthResult> RegisterAsync(string email, string password)
@@ -52,7 +52,7 @@ namespace Infrastructure.Auth
             }
 
             var token = await GenerateToken(user.Id);
-            return new AuthResult { Succeeded = true, Token = token };
+            return new AuthResult { Succeeded = true, Token = token.token };
         }
 
         public async Task LogoutAsync()
@@ -60,7 +60,7 @@ namespace Infrastructure.Auth
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<string> GenerateToken(string userId)
+        public async Task<(string token, int expiresIn)> GenerateToken(string userId)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
@@ -75,15 +75,18 @@ namespace Infrastructure.Auth
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var expiresIn = 3600;
 
             var token = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
                 audience: _jwtSettings.Audience,
                 claims: claims,
                 expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
-                signingCredentials: creds);
+                signingCredentials: creds
+            );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+            return ((tokenString, expiresIn));
         }
     }
 }

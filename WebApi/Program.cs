@@ -20,8 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 // 🔌 Configura EF Core con SQL Server
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
 // 🧩 Inyecta dependencias
 builder.Services.AddScoped<ICreditCardRepository, CreditCardRepository>();
@@ -60,7 +59,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 // JWT config
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
-builder.Services.AddScoped<IAuthService, AuthService>(); // desde Infrastructure
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 // JWT config
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
