@@ -1,5 +1,4 @@
-﻿
-namespace Application.DTOs
+﻿namespace Application.Shared
 {
     public class UserDto
     {

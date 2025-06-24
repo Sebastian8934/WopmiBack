@@ -1,5 +1,5 @@
-﻿using Application.DTOs;
-using Application.Interface;
+﻿using Application.Interface;
+using Application.Shared;
 using Domain.Ports;
 
 namespace Application.UseCases.Users

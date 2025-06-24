@@ -1,4 +1,4 @@
-﻿using Application.DTOs;
+﻿using Application.Shared;
 
 namespace Application.Interface
 {

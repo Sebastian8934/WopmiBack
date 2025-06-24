@@ -1,5 +1,5 @@
 ﻿using Application.Interface;
-using Application.Models;
+using Application.Shared;
 using Infrastructure.Identity;
 using Infrastructure.Jwt;
 using Microsoft.AspNetCore.Identity;
@@ -24,23 +24,23 @@ namespace Infrastructure.Auth
             _jwtSettings = jwtOptions.Value;
         }
 
-        public async Task<AuthResult> LoginAsync(string email, string password)
+        public async Task<AuthResultDto> LoginAsync(string email, string password)
         {
             var user = await _userManager.FindByEmailAsync(email);
             if (user == null)
-                return new AuthResult { Succeeded = false, Error = "Usuario no encontrado." };
+                return new AuthResultDto { Succeeded = false, Error = "Usuario no encontrado." };
 
             var result = await _signInManager.PasswordSignInAsync(user, password, false, false);
 
             if (!result.Succeeded)
-                return new AuthResult { Succeeded = false, Error = "Credenciales incorrectas." };
+                return new AuthResultDto { Succeeded = false, Error = "Credenciales incorrectas." };
 
             var token = await GenerateToken(user.Id);
 
-            return new AuthResult { Succeeded = true, Token = token.token };
+            return new AuthResultDto { Succeeded = true, Token = token.token };
         }
 
-        public async Task<AuthResult> RegisterAsync(string email, string password)
+        public async Task<AuthResultDto> RegisterAsync(string email, string password)
         {
             var user = new AppUser { Email = email, UserName = email };
             var result = await _userManager.CreateAsync(user, password);
@@ -48,11 +48,11 @@ namespace Infrastructure.Auth
             if (!result.Succeeded)
             {
                 var error = result.Errors.FirstOrDefault()?.Description ?? "Error desconocido.";
-                return new AuthResult { Succeeded = false, Error = error };
+                return new AuthResultDto { Succeeded = false, Error = error };
             }
 
             var token = await GenerateToken(user.Id);
-            return new AuthResult { Succeeded = true, Token = token.token };
+            return new AuthResultDto { Succeeded = true, Token = token.token };
         }
 
         public async Task LogoutAsync()

@@ -3,7 +3,6 @@ using Domain.Ports;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace Infrastructure.Repositories 
 {
     public class ProductRepository : IProductRepository
@@ -23,6 +22,12 @@ namespace Infrastructure.Repositories
         public async Task AddAsync(Product product)
         {
             _context.Product.Add(product);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AddMultipleAsync(List<Product> products)
+        {
+            _context.Product.AddRange(products);
             await _context.SaveChangesAsync();
         }
     }

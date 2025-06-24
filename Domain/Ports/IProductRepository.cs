@@ -6,5 +6,6 @@ namespace Domain.Ports
     {
         Task<IEnumerable<Product>> GetAllAsync();
         Task AddAsync(Product product);
+        Task AddMultipleAsync(List<Product> product);
     }
 }

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Application.Services;
 using Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {

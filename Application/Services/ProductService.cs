@@ -15,5 +15,10 @@ namespace Application.Services
         public async Task<IEnumerable<Product>> GetAllProductsAsync() => await _repository.GetAllAsync();
 
         public async Task AddProductAsync(Product product) => await _repository.AddAsync(product);
+
+        public async Task AddProductsAsync(List<Product> products)
+        {
+            await _repository.AddMultipleAsync(products);
+        }
     }
 }

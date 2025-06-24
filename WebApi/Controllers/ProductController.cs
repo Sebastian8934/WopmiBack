@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
+﻿using Microsoft.AspNetCore.Mvc;
 using Application.Services;
+using Application.Shared;
+using WebApi.Models.Responses;
 using Domain.Entities;
+using Application.DTOs.Requests.Product;
 
 namespace WebApi.Controllers
 {
@@ -25,10 +26,48 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(Product product)
+        public async Task<IActionResult> Add([FromBody] ProductRequestDto dto)
         {
-            await _service.AddProductAsync(product);
-            return Ok();
+            try
+            {
+                var product = new Product
+                {
+                    Name = dto.Name,
+                    Description = dto.Description,
+                    Price = dto.Price,
+                    StockQuantity = dto.StockQuantity
+                };
+
+                await _service.AddProductAsync(product);
+                return Ok(new ApiResponse<object>(200, true, "Producto agregado correctamente"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<object>(500, false, "Error interno del servidor", ex.Message));
+            }
+        }
+
+        [HttpPost("bulk")]
+        public async Task<IActionResult> AddMultiple([FromBody] List<ProductRequestDto> dtoList)
+        {
+            try
+            {
+                var products = dtoList.Select(dto => new Product
+                {
+                    Name = dto.Name,
+                    Description = dto.Description,
+                    Price = dto.Price,
+                    StockQuantity = dto.StockQuantity
+                }).ToList();
+
+                await _service.AddProductsAsync(products);
+
+                return Ok(new ApiResponse<object>(200, true, "Productos agregados correctamente"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<object>(500, false, "Error interno del servidor", ex.Message));
+            }
         }
     }
 }
