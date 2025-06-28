@@ -21,12 +21,19 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var products = await _service.GetAllProductsAsync();
-            return Ok(products);
+            try
+            {
+                var products = await _service.GetAllProductsAsync();
+                return Ok(new ApiResponse<object>(200, true, "Lista de productos",products));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<object>(500, false, "Error interno del servidor", ex.Message));
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] ProductRequestDto dto)
+        public async Task<IActionResult> Add([FromBody] ProductResponseDto dto)
         {
             try
             {
@@ -48,7 +55,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("bulk")]
-        public async Task<IActionResult> AddMultiple([FromBody] List<ProductRequestDto> dtoList)
+        public async Task<IActionResult> AddMultiple([FromBody] List<ProductResponseDto> dtoList)
         {
             try
             {
