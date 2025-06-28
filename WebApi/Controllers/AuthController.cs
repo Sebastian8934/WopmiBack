@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Application.Interface;
 using Infrastructure.Identity;
 using Microsoft.AspNetCore.Authorization;
-using WebApi.Models.Responses;
+using WebApi.shared;
 using WebApi.Models.Responses.Auth;
 using WebApi.Models.Requests.Auth;
 

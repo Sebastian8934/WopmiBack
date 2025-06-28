@@ -1,5 +1,5 @@
-﻿using Application.Interface;
-using Application.Shared;
+﻿using Application.DTOs;
+using Application.Interface;
 using Infrastructure.Identity;
 using Infrastructure.Jwt;
 using Microsoft.AspNetCore.Identity;

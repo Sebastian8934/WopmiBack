@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 
 using Application.Services;
 using Domain.Entities;
+using WebApi.Models.Requests.DeliveryInfo;
+using WebApi.shared;
 
 namespace WebApi.Controllers
 {
@@ -20,15 +22,37 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var response = await _service.GetAllDeliveryInfodAsync();
-            return Ok(response);
+            try
+            {
+                var deliverys = await _service.GetAllDeliveryInfodAsync();
+                return Ok(new ApiResponse<object>(200, true, "Lista de informacion", deliverys));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<object>(500, false, "Error interno del servidor", ex.Message));
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(DeliveryInfo product)
+        public async Task<IActionResult> Add([FromBody] DeliveryInfoRequest dto)
         {
-            await _service.AddDeliveryInfoAsync(product);
-            return Ok();
+            try
+            {
+                var deliveryInfo = new DeliveryInfo
+                {
+                    Address = dto.Address,
+                    City = dto.City,
+                    State = dto.State,
+                    ZipCode = dto.ZipCode,
+                    Country = dto.Country
+                };
+                await _service.AddDeliveryInfoAsync(deliveryInfo);
+                return Ok(new ApiResponse<object>(200, true, "Se creo correctamente"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<object>(500, false, "Error interno del servidor", ex.Message));
+            }
         }
     }
 }

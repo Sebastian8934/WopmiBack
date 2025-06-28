@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Application.Services;
+using WebApi.shared;
+using WebApi.Models.Requests.CreditCard;
 using Domain.Entities;
 
 namespace WebApi.Controllers
@@ -19,15 +20,37 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var products = await _service.GetAllCreditCardAsync();
-            return Ok(products);
+            try
+            {
+                var products = await _service.GetAllCreditCardAsync();
+                return Ok(new ApiResponse<object>(200, true, "Lista de productos", products));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<object>(500, false, "Error interno del servidor", ex.Message));
+            }
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(CreditCard product)
+        public async Task<IActionResult> Add([FromBody] CreditCardRequest dto)
         {
-            await _service.AddCreditCardAsync(product);
-            return Ok();
+            try
+            {
+                var creditCard = new CreditCard
+                {
+                    CardNumber = dto.CardNumber,
+                    CardholderName = dto.CardholderName,
+                    ExpirationDate = dto.ExpirationDate,
+                    Cvv = dto.Cvv
+                };
+
+                await _service.AddCreditCardAsync(creditCard);
+                return Ok(new ApiResponse<object>(200, true, "tarjeta agregada correctamente"));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<object>(500, false, "Error interno del servidor", ex.Message));
+            }
         }
     }
 }

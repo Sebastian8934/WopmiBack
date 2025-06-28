@@ -1,6 +1,6 @@
 ﻿namespace Application.DTOs.Responses.Product
 {
-    public class ProductResponseDto
+    public class ProductResponse
     {
         public int Id { get; set; }
         public string? Name { get; set; }

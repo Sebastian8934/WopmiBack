@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Application.Services;
-using Application.Shared;
-using WebApi.Models.Responses;
 using Domain.Entities;
 using Application.DTOs.Requests.Product;
+using WebApi.shared;
 
 namespace WebApi.Controllers
 {
@@ -68,7 +67,6 @@ namespace WebApi.Controllers
                 }).ToList();
 
                 await _service.AddProductsAsync(products);
-
                 return Ok(new ApiResponse<object>(200, true, "Productos agregados correctamente"));
             }
             catch (Exception ex)

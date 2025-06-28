@@ -1,4 +1,4 @@
-﻿namespace Application.Shared
+﻿namespace Application.DTOs
 {
     public class AuthResultDto
     {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace WebApi.Models.Responses
+namespace WebApi.shared
 {
     public class ApiResponse<T>
     {
