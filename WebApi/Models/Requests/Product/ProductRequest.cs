@@ -1,6 +1,6 @@
-﻿namespace Application.DTOs.Requests.Product
+﻿namespace WebApi.Models.Requests.Product
 {
-    public class ProductResponseDto
+    public class ProductRequest
     {
         public string? Name { get; set; }
         public string? Description { get; set; }

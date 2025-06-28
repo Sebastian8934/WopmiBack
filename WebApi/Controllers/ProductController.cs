@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Application.Services;
 using Domain.Entities;
-using Application.DTOs.Requests.Product;
 using WebApi.shared;
+using WebApi.Models.Requests.Product;
+using WebApi.Models.Responses.Product;
 
 namespace WebApi.Controllers
 {
@@ -32,7 +33,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] ProductResponseDto dto)
+        public async Task<IActionResult> Add([FromBody] ProductRequest dto)
         {
             try
             {
@@ -54,7 +55,7 @@ namespace WebApi.Controllers
         }
 
         [HttpPost("bulk")]
-        public async Task<IActionResult> AddMultiple([FromBody] List<ProductResponseDto> dtoList)
+        public async Task<IActionResult> AddMultiple([FromBody] List<ProductResponse> dtoList)
         {
             try
             {

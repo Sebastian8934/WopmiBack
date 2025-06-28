@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs.Responses.Product
+﻿namespace WebApi.Models.Responses.Product
 {
     public class ProductResponse
     {

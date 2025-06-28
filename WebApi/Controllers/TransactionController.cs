@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
+﻿using Microsoft.AspNetCore.Mvc;
 using Application.Services;
 using Domain.Entities;
-using Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
+using WebApi.shared;
 
 namespace WebApi.Controllers
 {
@@ -22,15 +19,30 @@ namespace WebApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var transaction = await _service.GetAllTransactionAsync();
-            return Ok(transaction);
+            try
+            {
+                var transaction = await _service.GetAllTransactionAsync();
+                return Ok(transaction);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<object>(500, false, "Error interno del servidor", ex.Message));
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Add(Transaction transaction)
         {
-            await _service.AddTransactionAsync(transaction);
-            return Ok();
+            try
+            {
+                await _service.AddTransactionAsync(transaction);
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<object>(500, false, "Error interno del servidor", ex.Message));
+            }
         }
     }
 }
