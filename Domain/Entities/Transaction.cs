@@ -16,8 +16,6 @@ namespace Domain.Entities
         public decimal TotalAmount { get; set; }
         public decimal BaseFee { get; set; }
         public decimal DeliveryFee { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
         public ICollection<TransactionItem> TransactionItem { get; set; }
     }
 }

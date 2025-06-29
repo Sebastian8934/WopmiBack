@@ -1,13 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Ports;
 using Infrastructure.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-
 
 namespace Infrastructure.Repositories 
 {
@@ -25,10 +19,11 @@ namespace Infrastructure.Repositories
             return await _context.Transaction.ToListAsync();             
         }
 
-        public async Task AddAsync(Transaction transaction)
+        public async Task<Transaction> AddAsync(Transaction transaction)
         {
             _context.Transaction.Add(transaction);
             await _context.SaveChangesAsync();
+            return transaction;
         }
     }
 }

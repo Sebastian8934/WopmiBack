@@ -32,6 +32,12 @@ builder.Services.AddScoped<DeliveryInfoService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ProductService>();
 
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<TransactionService>();
+
+builder.Services.AddScoped<ITransactionItemRepository, TransactionItemRepository>();
+builder.Services.AddScoped<TransactionItemService>();
+
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IRoleRepository, RoleRepositoryAdapter>();
 

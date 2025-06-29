@@ -38,16 +38,6 @@ namespace SNET.WEBSINAI.Data.SqlServer.Configuracion
                 .IsRequired()
                 .HasColumnType("decimal(10,2)");
 
-            builder
-                .Property(e => e.CreatedAt)
-                .HasMaxLength(10)
-                .HasColumnType("dateTime");
-
-            builder
-                .Property(e => e.UpdatedAt)
-                .HasMaxLength(10)
-                .HasColumnType("decimal");
-
         }
     }
 }
