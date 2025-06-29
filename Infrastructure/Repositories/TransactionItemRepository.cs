@@ -25,10 +25,11 @@ namespace Infrastructure.Repositories
             return await _context.TransactionItem.ToListAsync();             
         }
 
-        public async Task AddAsync(TransactionItem transactionItem)
+        public async Task<TransactionItem> AddAsync(TransactionItem transactionItem)
         {
             _context.TransactionItem.Add(transactionItem);
             await _context.SaveChangesAsync();
+            return transactionItem;
         }
     }
 }

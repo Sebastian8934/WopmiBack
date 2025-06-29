@@ -14,6 +14,6 @@ namespace Application.Services
 
         public async Task<IEnumerable<TransactionItem>> GetAllTransactionItemAsync() => await _repository.GetAllAsync();
 
-        public async Task AddTransactionItemAsync(TransactionItem transactionItem) => await _repository.AddAsync(transactionItem);
+        public async Task<TransactionItem> AddTransactionItemAsync(TransactionItem transactionItem) => await _repository.AddAsync(transactionItem);
     }
 }

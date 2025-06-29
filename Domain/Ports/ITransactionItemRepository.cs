@@ -5,6 +5,6 @@ namespace Domain.Ports
     public interface ITransactionItemRepository
     {
         Task<IEnumerable<TransactionItem>> GetAllAsync();
-        Task AddAsync(TransactionItem transactionItem);
+        Task<TransactionItem> AddAsync(TransactionItem transactionItem);
     }
 }

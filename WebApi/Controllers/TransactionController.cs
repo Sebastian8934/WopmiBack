@@ -38,9 +38,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                //Debe crear a transaction
-                //Debe crear el registro de trasaction item 
-                //Debe descontar el producto
+                //Crea la transacción
                 var transaction = new Transaction
                 {
                     //UserId = dto.UserId,
@@ -52,14 +50,34 @@ namespace WebApi.Controllers
                 };
                 var resultTrasaction = await _service.AddTransactionAsync(transaction);
 
+                if (resultTrasaction == null)
+                {
+                    return BadRequest(new ApiResponse<object>(400, false, "No se pudo guardar la transacción"));
+                }
 
-                //var transactionItem = new TransactionItem
-                //{
-                //    Quantity = dto.Quantity,
-                //    UnitPrice = dto.UnitPrice
-                //};
-                //await _TransactionItemService.AddTransactionItemAsync(transactionItem);
+                //Crea a trasaccion item
+                var transactionItem = new TransactionItem
+                {
+                    TransactionId = resultTrasaction.Id,
+                    ProductId = dto.ProductId,
+                    Quantity = dto.Quantity,
+                    UnitPrice = dto.UnitPrice
+                };
+                var resultTrasactionItem = await _TransactionItemService.AddTransactionItemAsync(transactionItem);
 
+                if (resultTrasactionItem == null)
+                {
+                    return BadRequest(new ApiResponse<object>(400, false, "No se pudo guardar el detalle de la transacción"));
+                }
+
+                var producto = new Product
+                {
+                    StockQuantity = dto.StockQuantity
+                };
+
+                //Actualiza el stock del producto
+
+                //Retorna la respuesta
                 return Ok(new ApiResponse<object>(200, true, "Venta realizada con exito"));
             }
             catch (Exception ex)
