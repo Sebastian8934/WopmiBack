@@ -30,5 +30,26 @@ namespace Infrastructure.Repositories
             _context.Product.AddRange(products);
             await _context.SaveChangesAsync();
         }
+        //public async Task<Product> GetByIdAsync(int ProductId)
+        //{
+        //   return await _context.Product.FindAsync(ProductId);
+        //}
+
+        public async Task DecreaseStockAsync(int productId, int stockQuantity)
+        {
+            var product = await _context.Product.FindAsync(productId);
+
+            if (product == null)
+                throw new Exception("Producto no encontrado");
+
+            if (product.StockQuantity < stockQuantity)
+                throw new Exception("Stock insuficiente");
+
+            product.StockQuantity -= stockQuantity;
+
+            _context.Product.Update(product);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

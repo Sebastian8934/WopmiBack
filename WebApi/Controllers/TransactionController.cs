@@ -12,11 +12,13 @@ namespace WebApi.Controllers
     {
         private readonly TransactionService _service;
         private readonly TransactionItemService _TransactionItemService;
+        private readonly ProductService _ProductService;
 
-        public TransactionController(TransactionService service, TransactionItemService transactionItemService)
+        public TransactionController(TransactionService service, TransactionItemService transactionItemService, ProductService productService)
         {
             _service = service;
             _TransactionItemService = transactionItemService;
+            _ProductService = productService;
         }
 
         [HttpGet]
@@ -70,12 +72,8 @@ namespace WebApi.Controllers
                     return BadRequest(new ApiResponse<object>(400, false, "No se pudo guardar el detalle de la transacción"));
                 }
 
-                var producto = new Product
-                {
-                    StockQuantity = dto.StockQuantity
-                };
-
                 //Actualiza el stock del producto
+                await _ProductService.DecreaseStockAsync(dto.ProductId, dto.StockQuantity);
 
                 //Retorna la respuesta
                 return Ok(new ApiResponse<object>(200, true, "Venta realizada con exito"));

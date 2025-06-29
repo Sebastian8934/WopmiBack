@@ -16,6 +16,6 @@
         public decimal UnitPrice { get; set; }
 
         //Product
-        public int StockQuantity { get; set; }        
+        public int StockQuantity { get; set; }
     }
 }

@@ -20,5 +20,12 @@ namespace Application.Services
         {
             await _repository.AddMultipleAsync(products);
         }
+
+        //public Task Get
+
+        public async Task DecreaseStockAsync(int productId,int stockQuantity)
+        {           
+            await _repository.DecreaseStockAsync(productId, stockQuantity);
+        }
     }
 }

@@ -7,5 +7,7 @@ namespace Domain.Ports
         Task<IEnumerable<Product>> GetAllAsync();
         Task AddAsync(Product product);
         Task AddMultipleAsync(List<Product> product);
+        //Task <int> GetByIdAsync(int ProductId);
+        Task DecreaseStockAsync(int ProductId, int StockQuantity);
     }
 }
