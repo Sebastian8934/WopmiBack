@@ -14,6 +14,7 @@ using Application.Interface;
 using Application.UseCases.Roles;
 using Infrastructure.Identity;
 using Application.UseCases.Users;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -89,6 +90,15 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(key)
     };
 });
+
+// Configura Serilog
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .WriteTo.Console() // Opcional: para ver en consola
+    .CreateLogger();
+
+builder.Host.UseSerilog(); // Reemplaza el logger por defecto
 
 // 🚀 Configura servicios API
 builder.Services.AddControllers();

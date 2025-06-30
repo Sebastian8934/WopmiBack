@@ -16,12 +16,14 @@ namespace WebApi.Controllers
         private readonly IAuthService _authService;
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ILogger<AuthController> _logger;
 
-        public AuthController(UserManager<AppUser> userManager, IAuthService authService,RoleManager<IdentityRole> roleManager)
+        public AuthController(UserManager<AppUser> userManager, IAuthService authService,RoleManager<IdentityRole> roleManager, ILogger<AuthController> logger)
         {
             _authService = authService;
             _userManager = userManager;
             _roleManager = roleManager;
+            _logger = logger;
         }
 
         [HttpPost("login")]
@@ -46,10 +48,12 @@ namespace WebApi.Controllers
                     ExpiresIn = token.expiresIn
                 };
 
+                _logger.LogInformation("Usuario {Email} inició sesión con éxito. Rol: {Rol}", model.Email, rol);
                 return Ok(new ApiResponse<LoginResponse>(200, true, "Inicio de sesión exitoso", response));
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Error al intentar iniciar sesión para el email: {Email}", model.Email);
                 return StatusCode(500, new ApiResponse<object>(500, false, "Error interno del servidor", ex.Message));
             }
         }
