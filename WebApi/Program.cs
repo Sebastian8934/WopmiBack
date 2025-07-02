@@ -18,6 +18,29 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configurar CORS
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("AllowFrontend", policy =>
+//    {
+//        policy.WithOrigins("https://tu-frontend.azurewebsites.net") 
+//              .AllowAnyHeader()
+//              .AllowAnyMethod(); // Acepta GET, POST, PUT, DELETE, etc.
+//    });
+//});
+
+// Habilitar CORS para todos los orígenes, métodos y cabeceras
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+
 // 🔌 Configura EF Core con SQL Server
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -106,6 +129,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// Usar la política de CORS antes de los endpoints
+app.UseCors("AllowAll");
 
 // 🌐 Middleware
 app.UseSwagger();
