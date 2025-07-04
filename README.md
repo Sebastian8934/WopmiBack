@@ -28,7 +28,9 @@ El sistema también incluye autenticación mediante inicio de sesión seguro.
 - **Base de datos:** SQL Server  
 - **ORM:** Entity Framework Core  
 - **Autenticación:** JWT + ASP.NET Identity + OAuth 2.0  
-- **Arquitectura:** Hexagonal (Ports and Adapters)  
+- **Arquitectura:** Hexagonal (Ports and Adapters) con principios de DDD (Domain-Driven Design)  
+- **Patrones de diseño:** DDD, Repository, Unit of Work, Strategy, Dependency Injection  
+- **Logs:** Serilog para trazabilidad y monitoreo estructurado  
 - **Despliegue:** Microsoft Azure  
 - **Documentación de API:** Swagger
 
@@ -92,6 +94,15 @@ El sistema implementa autenticación robusta para proteger los recursos de la AP
 - **ASP.NET Identity** para gestión de usuarios y contraseñas
 - **OAuth 2.0** para posibles integraciones externas
 - **Middleware personalizado** para validación de tokens y manejo de errores
+
+---
+
+## 🪵 Logs
+
+El sistema utiliza **Serilog** para registrar eventos importantes del sistema, errores y trazabilidad de las operaciones.
+
+- Registra información estructurada en consola, archivos y otros destinos configurables.
+- Se recomienda enviar logs a Azure Monitor o Application Insights en entornos productivos.
 
 ---
 
