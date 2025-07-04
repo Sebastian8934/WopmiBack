@@ -1,67 +1,128 @@
-# Aplicación de gestión de inventario y transacciones para una tienda digital
+# 🧾 Aplicación de Gestión de Inventario y Transacciones – Documentación Técnica (Backend)
 
-Este proyecto es una aplicación completa que incluye una API RESTful desarrollada en ASP.NET Core y una interfaz de usuario (UI) para gestionar productos, inventario, clientes, transacciones y entregas. 
-El sistema sigue un flujo de compra de 5 pasos que permite mostrar productos, ingresar información de pago, confirmar la compra y mostrar el estado final de la transacción.
+## 📌 Descripción del Proyecto
 
----
+Este proyecto es una aplicación completa que incluye una **API RESTful desarrollada en .NET 8** para gestionar:
 
-## 🧩 Características principales
+- Productos
+- Inventario
+- Clientes
+- Transacciones
+- Entregas
 
-- **Diseño robusto de la API**: arquitectura limpia basada en principios SOLID.
-- **Endpoints seguros y validados**: prevención de errores y manejo de datos sensibles.
-- **Resiliencia**: recuperación de estado del cliente tras recarga.
-- **UI amigable**: muestra productos disponibles en stock.
-- **Proceso de compra en 5 pasos.**
+La aplicación implementa un **flujo de compra en 5 pasos**, que permite:
+1. Visualizar productos
+2. Ingresar información de pago
+3. Confirmar la compra
+4. Mostrar estado de la transacción
+5. Gestionar la entrega
 
----
-
-## 🗂 Estructura del proyecto
-
-/StoreApp.API
-</br>
-/Controllers
-</br>
-/Models
-</br>
-/DTOs
-</br>
-/Services
-</br>
-/Data
-</br>
-/Helpers
-</br>
-/StoreApp.UI
-</br>
-/Pages
-</br>
-/Components
-</br>
-/wwwroot
-</br>
-/database
-</br>
-schema.sql
-</br>
-README.md
+El sistema también incluye autenticación mediante inicio de sesión seguro.
 
 ---
 
-## 🔐 Validaciones implementadas
+## 🛠️ Tecnologías Utilizadas
 
-- Validación de stock antes de permitir una compra.
-- Verificación de datos de tarjeta de crédito (formato, expiración).
-- Validación de campos requeridos para clientes y entregas.
-- Control de errores con respuestas claras (400/404/500).
-- Middleware para manejo centralizado de excepciones.
+- **Lenguaje:** C#  
+- **Framework:** ASP.NET Core 8  
+- **Base de datos:** SQL Server  
+- **ORM:** Entity Framework Core  
+- **Autenticación:** JWT + ASP.NET Identity + OAuth 2.0  
+- **Arquitectura:** Hexagonal (Ports and Adapters)  
+- **Despliegue:** Microsoft Azure  
+- **Documentación de API:** Swagger
 
 ---
 
-## 🔒 Manejo de datos sensibles
+## 🧱 Arquitectura del Proyecto
 
-- Uso de `appsettings.json` y `User Secrets` para configuración segura.
-- Cifrado de datos sensibles (como tarjetas) usando `Data Protection API`.
-- Acceso restringido mediante `Authorization` y `Authentication`.
-- Protección contra ataques comunes (SQL Injection, XSS, CSRF).
+El backend utiliza una **arquitectura hexagonal**, que promueve la separación clara entre el dominio, los casos de uso y los mecanismos externos (API, base de datos, autenticación).
+
+### Capas principales:
+
+- **Domain**
+  - Entidades de negocio
+  - Interfaces
+- **Application**
+  - Casos de uso
+  - DTOs
+- **Infrastructure**
+  - Persistencia de datos
+  - Autenticación
+- **API**
+  - Controladores
+  - Middlewares
+  - Documentación Swagger
+
+---
+
+## 📁 Estructura del Proyecto
+
+```
+/src
+  /Api
+    - Controllers
+    - Middlewares
+    - Program.cs
+  /Application
+    - UseCases
+    - DTOs
+    - Interfaces
+  /Domain
+    - Entities
+    - Interfaces
+    - Services
+  /Infrastructure
+    - Persistence
+    - Identity
+    - OAuth
+    - Configurations
+/tests
+  /UnitTests
+  /IntegrationTests
+```
+
+---
+
+## 🔐 Seguridad y Autenticación
+
+El sistema implementa autenticación robusta para proteger los recursos de la API:
+
+- **JWT** para el manejo de sesiones
+- **ASP.NET Identity** para gestión de usuarios y contraseñas
+- **OAuth 2.0** para posibles integraciones externas
+- **Middleware personalizado** para validación de tokens y manejo de errores
+
+---
+
+## 🧪 Pruebas
+
+Se contemplan pruebas para asegurar el correcto funcionamiento del sistema:
+
+- **Pruebas Unitarias** – Validan la lógica interna de cada componente
+- **Pruebas de Integración** – Verifican la comunicación entre capas (API ↔ DB)
+
+### Herramientas recomendadas:
+- xUnit o NUnit
+- Moq
+- FluentAssertions
+
+---
+
+## 🚀 Despliegue
+
+La aplicación está desplegada en **Azure App Service**. Se recomienda el uso de CI/CD mediante GitHub Actions o Azure DevOps.
+
+---
+
+## ✅ Estado Actual
+
+- [x] API RESTful funcional
+- [x] Arquitectura hexagonal implementada
+- [x] Seguridad con JWT, Identity y OAuth
+- [x] Flujo de compra en 5 pasos implementado
+- [x] Documentación Swagger habilitada
+- [ ] Pruebas unitarias e integración en desarrollo
+- [x] Despliegue en Azure
 
 ---
