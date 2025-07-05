@@ -109,6 +109,56 @@ namespace WebApi.Controllers
 
         }
 
+        [HttpPost("registerUser")]
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterRequest model)
+        {
+            try
+            {
+
+                // 1. Validar si el rol existe
+                if (!await _roleManager.RoleExistsAsync("Usuario"))
+                {
+                    return BadRequest(new ApiErrorResponse(400, "ROLE_NOT_FOUND", $"El rol 'Usuario' no existe."));
+                }
+
+                // 2. Crear el usuario desde el DTO
+                var user = new AppUser
+                {
+                    UserName = model.UserName,
+                    Email = model.Email,
+                    FullName = model.FullName
+                };
+
+                // 3. Crear usuario con Identity
+                var result = await _userManager.CreateAsync(user, model.Password);
+
+                if (!result.Succeeded)
+                {
+                    var error = result.Errors.FirstOrDefault()?.Description ?? "Error desconocido al registrar usuario.";
+                    return BadRequest(new ApiErrorResponse(400, "USER_CREATION_FAILED", error));
+                }
+
+                // 4. Asignar el rol al usuario
+                var roleResult = await _userManager.AddToRoleAsync(user, "Usuario");
+
+                if (!roleResult.Succeeded)
+                {
+                    return BadRequest(new ApiErrorResponse(400, "ROLE_ASSIGN_FAILED", "No se pudo asignar el rol."));
+                }
+
+                // 5. Devolver respuesta
+                return Ok(new ApiResponse<object>(200, true, "Usuario registrado"));
+
+            }
+
+            catch (Exception ex)
+            {
+                // Error inesperado
+                return StatusCode(500, new ApiErrorResponse(500, "INTERNAL_SERVER_ERROR", ex.Message));
+            }
+
+        }
+
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
