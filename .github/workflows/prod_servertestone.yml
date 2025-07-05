@@ -42,5 +42,5 @@ jobs:
         with:
           app-name: 'servertestone'
           slot-name: 'Production'
-          package: ./
+          package: ./publish
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_225381F7F49146C2880F8A3845B62CEE }}
