@@ -18,8 +18,8 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-      - name: Publish app
-        run: dotnet publish -c Release -o ./publish
+      - name: Publish API project
+        run: dotnet publish ./WebApi/WebApi.csproj -c Release -o ./publish
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
