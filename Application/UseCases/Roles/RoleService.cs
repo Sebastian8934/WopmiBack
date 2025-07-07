@@ -1,6 +1,6 @@
 ﻿using Application.DTOs;
 using Application.Interface;
-using Domain.Interfaces;
+using Domain.Ports;
 
 namespace Application.UseCases.Roles
 {

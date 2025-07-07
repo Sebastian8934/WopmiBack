@@ -1,8 +1,9 @@
 ﻿using Domain.Entities;
 using Domain.Ports;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 
-namespace Infrastructure.Identity
+namespace Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {

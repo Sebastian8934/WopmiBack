@@ -3,6 +3,7 @@ using Application.Services;
 using Domain.Entities;
 using WebApi.shared;
 using WebApi.Models.Requests.Transaction;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
@@ -21,6 +22,7 @@ namespace WebApi.Controllers
             _ProductService = productService;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -35,6 +37,7 @@ namespace WebApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] TransactionRequest dto)
         {

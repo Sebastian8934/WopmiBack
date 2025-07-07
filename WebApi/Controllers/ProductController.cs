@@ -4,6 +4,7 @@ using Domain.Entities;
 using WebApi.shared;
 using WebApi.Models.Requests.Product;
 using WebApi.Models.Responses.Product;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
@@ -18,6 +19,7 @@ namespace WebApi.Controllers
             _service = service;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -32,6 +34,7 @@ namespace WebApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] ProductRequest dto)
         {
@@ -54,6 +57,7 @@ namespace WebApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost("bulk")]
         public async Task<IActionResult> AddMultiple([FromBody] List<ProductResponse> dtoList)
         {

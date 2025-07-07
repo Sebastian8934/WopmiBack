@@ -1,4 +1,4 @@
-﻿using Domain.Interfaces;
+﻿using Domain.Ports;
 using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.Identity
@@ -21,7 +21,7 @@ namespace Infrastructure.Identity
             return result.Succeeded;
         }
 
-        public async Task<List<string>> GetAllAsync()
+        public async Task<List<string?>> GetAllAsync()
         {
             return _roleManager.Roles.Select(r => r.Name).ToList();
         }

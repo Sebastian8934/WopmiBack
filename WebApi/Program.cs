@@ -1,20 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Application.Services;
-using Domain.Ports;
 using Infrastructure.Data;
-using Infrastructure.Repositories;
-using Microsoft.AspNetCore.Identity;
-using Domain.Interfaces;
 using Infrastructure.Auth;
 using Infrastructure.Jwt;
+using Infrastructure.Repositories;
+using Infrastructure.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
 using Application.Interface;
+using Application.Services;
 using Application.UseCases.Roles;
-using Infrastructure.Identity;
 using Application.UseCases.Users;
+using System.Text;
 using Serilog;
+using Domain.Ports;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -67,6 +66,9 @@ builder.Services.AddScoped<IRoleRepository, RoleRepositoryAdapter>();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddScoped<IUserQueryService, UserQueryAdapter>();
+builder.Services.AddScoped<UserService>();
 
 //Auth
 builder.Services.AddScoped<IAuthService, AuthService>();

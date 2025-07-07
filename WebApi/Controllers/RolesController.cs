@@ -1,4 +1,5 @@
 ﻿using Application.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers
@@ -14,6 +15,7 @@ namespace WebApi.Controllers
             _service = service;
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromQuery] string name)
         {
@@ -21,6 +23,7 @@ namespace WebApi.Controllers
             return result ? Ok("Rol creado") : BadRequest("El rol ya existe");
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -28,6 +31,7 @@ namespace WebApi.Controllers
             return Ok(roles);
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(string id)
         {
@@ -35,6 +39,7 @@ namespace WebApi.Controllers
             return role != null ? Ok(role) : NotFound("Rol no encontrado");
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, [FromQuery] string name)
         {
@@ -42,6 +47,7 @@ namespace WebApi.Controllers
             return updated ? Ok("Rol actualizado") : NotFound("Rol no encontrado");
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {

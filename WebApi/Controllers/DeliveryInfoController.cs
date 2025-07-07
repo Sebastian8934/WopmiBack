@@ -5,6 +5,7 @@ using Application.Services;
 using Domain.Entities;
 using WebApi.Models.Requests.DeliveryInfo;
 using WebApi.shared;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApi.Controllers
 {
@@ -19,6 +20,7 @@ namespace WebApi.Controllers
             _service = service;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -33,6 +35,7 @@ namespace WebApi.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] DeliveryInfoRequest dto)
         {
